@@ -24,7 +24,7 @@ public class Producer {
             String message = "This is LOG!";
 
             //3. Sending message to "logs" (fanout) exchange with empty routing key (because it is being ignore from fanout exchange,
-            // can be setting routing key although, but it is not be using)
+            //can be setting routing key although, BUT IT IS NOT BE USING)
             channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes("UTF-8"));
             System.out.println(" [x] Sent '" + message + "'");
         }

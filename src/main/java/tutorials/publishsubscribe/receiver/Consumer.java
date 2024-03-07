@@ -21,18 +21,19 @@ public class Consumer {
         //2. exchange declaration.
         channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 
-        //3. Temp queue declaration, its feature:
-        //- non-durable: ((the queue not survive a server restart), exclusive: (can only be used (consumed from, purged, deleted, etc) by its declaring connection.),
-        //- auto-delete: (server will delete it when no longer in use [when last consumer unsubscribe])
+        //3. Temp queue declaration, its features:
+        //- non-durable: the queue not survive a server restart, exclusive: can only be used (consumed, purged, deleted, etc.) by its declaring connection.
+        //- auto-delete: server will delete it when no longer in use (when last consumer unsubscribed).
         //- and randomly named.
         String queueName = channel.queueDeclare().getQueue();
         System.out.println(" [!] Temp queue name is : " + queueName);
 
-        //3. Queue and exchange binding with NOT specifying (or any key) routing key because exchanger type is "fanout".
-        channel.queueBind(queueName, EXCHANGE_NAME, "not_using_routing_key");
+        //3. Queue and exchange binding with NOT specifying (or any) routing key because exchange type is "fanout".
+        channel.queueBind(queueName, EXCHANGE_NAME, "not_using_routing_key"); //Same with empty rounding key parameter.
 
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
+        //4. Callback method for consuming.
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
             System.out.println(" [x] Received '" + message + "'");

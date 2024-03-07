@@ -23,6 +23,7 @@ public class Producer {
             String severity = "INFO"; //Using as routing key.
             String message = "This is " + severity + " Log!";
 
+            //3. Message publishing to Direct exchange "direct_logs".
             channel.basicPublish(EXCHANGE_NAME, severity, null, message.getBytes("UTF-8"));
             System.out.println(" [x] Sent '" + severity + "':'" + message + "'");
         }
