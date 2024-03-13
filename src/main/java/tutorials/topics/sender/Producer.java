@@ -11,18 +11,20 @@ public class Producer {
     private static final String EXCHANGE_NAME = "topic_logs";
 
     public static void main(String[] argv) throws Exception {
+        //1. Connection to Server
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
+
         try (Connection connection = factory.newConnection();
             Channel channel = connection.createChannel()) {
 
             //2. "Topic" exchange declaration for sending message to MATCHED ROUTING PATTERN binding queue(s).
             channel.exchangeDeclare(EXCHANGE_NAME, "topic");
 
-            String routingKey = "root.kern.err";
+            String routingPattern = "root.kern.err";
             String message = "From Root kernel";
 
-            channel.basicPublish(EXCHANGE_NAME, routingKey, null, message.getBytes("UTF-8"));
+            channel.basicPublish(EXCHANGE_NAME, routingPattern, null, message.getBytes("UTF-8"));
             System.out.println(" [x] Sent '" + message + "'");
         }
     }

@@ -9,6 +9,7 @@ public class Consumer {
     private static final String EXCHANGE_NAME = "topic_logs";
 
     public static void main(String[] argv) throws Exception {
+        //1. Connection to Server (NOTE: Not in "TryWithResources" because continue listening queue)
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = factory.newConnection();
@@ -20,9 +21,10 @@ public class Consumer {
         //3. Temp queue declaration.
         String queueName = channel.queueDeclare().getQueue();
 
+        //4. Different routing patterns
         String[] routingPatterns = {"kern.*", "*.kern.*", "#.err"};
 
-        //4. Multiple bindings.
+        //5. Multiple bindings.
         for (String bindingKey : routingPatterns) {
             channel.queueBind(queueName, EXCHANGE_NAME, bindingKey);
             System.out.println(" [!] \"" + queueName + "\" queue bind to \"" + EXCHANGE_NAME + "\" exchange with \"" + bindingKey + "\" binding key (routing pattern for topic exchange).");
@@ -30,11 +32,12 @@ public class Consumer {
 
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
+        //6. Callback method for consuming messages.
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
-            System.out.println(" [x] Received '" +
-                    delivery.getEnvelope().getRoutingKey() + "':'" + message + "'");
+            System.out.println(" [x] Received '" + delivery.getEnvelope().getRoutingKey() + "':'" + message + "'");
         };
+
         channel.basicConsume(queueName, true, deliverCallback, consumerTag -> { });
     }
 }
