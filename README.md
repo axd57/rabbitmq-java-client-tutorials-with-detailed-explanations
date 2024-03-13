@@ -13,6 +13,9 @@
 6. [Remote procedure call (RPC)](src/main/java/tutorials/rpc)
 7. [Publisher Confirms](src/main/java/tutorials/publisherconfirms/sender)
 
+### Executing Tutorials
+follow [this](https://www.rabbitmq.com/docs/download) instructions to executing tutorials.
+
 > Notes
 
 - Packages are defined for each section in the [official tutorial series](https://www.rabbitmq.com/tutorials/tutorial-one-java), and there are sub-packages for `sender` and `receiver` (if exist).
