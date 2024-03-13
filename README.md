@@ -10,7 +10,7 @@
 3. [Publish/Subscribe](src/main/java/tutorials/publishsubscribe)
 4. [Routing](src/main/java/tutorials/routing)
 5. [Topics](src/main/java/tutorials/topics)
-6. [Remote procedure call (RPC)](src/main/java/tutorials/rpc)
+6. [Remote procedure call (RPC)](src/main/java/tutorials/rpc) 🖼️[For tutuorrial visualization](https://www.rabbitmq.com/tutorials/tutorial-six-java#summary)  
 7. [Publisher Confirms](src/main/java/tutorials/publisherconfirms/sender)
 
 ### Executing Tutorials
